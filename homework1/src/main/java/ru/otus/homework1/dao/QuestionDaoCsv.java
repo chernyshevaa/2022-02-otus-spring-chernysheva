@@ -13,16 +13,16 @@ import java.util.Scanner;
 public class QuestionDaoCsv implements QuestionDao {
     private static final Logger logger = LogManager.getLogger(QuestionDaoCsv.class);
 
-    private static String fileName;
+    private String fileName;
 
-    public void setFileName(String fileName) {
-        QuestionDaoCsv.fileName = fileName;
+    public QuestionDaoCsv(String fileName) {
+        this.fileName = fileName;
     }
 
     public List<Question> getQuestions() {
         List<Question> questions = new ArrayList<>();
 
-        try (Scanner scanner = new Scanner(readQuestions())) {
+        try (Scanner scanner = new Scanner(getQuestionsInputStream())) {
             while (scanner.hasNextLine()) {
                 questions.add(getQuestionFromLine(scanner.nextLine()));
             }
@@ -33,7 +33,7 @@ public class QuestionDaoCsv implements QuestionDao {
         return questions;
     }
 
-    private InputStream readQuestions() {
+    private InputStream getQuestionsInputStream() {
         ClassLoader classLoader = getClass().getClassLoader();
         InputStream inputStream = classLoader.getResourceAsStream(fileName);
 
