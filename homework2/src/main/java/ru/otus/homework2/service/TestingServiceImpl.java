@@ -23,7 +23,7 @@ public class TestingServiceImpl implements TestingService {
     public void performTesting() {
         List<Question> questions = questionDao.getQuestions();
         if (questions.size() == 0) {
-            userInteractionService.printMessage("There are problems reading questions file");
+            userInteractionService.printMessage("There are problems getting list of questions");
             return;
         }
 

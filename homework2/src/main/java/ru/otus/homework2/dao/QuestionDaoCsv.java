@@ -16,7 +16,7 @@ import java.util.Scanner;
 public class QuestionDaoCsv implements QuestionDao {
     private static final Logger logger = LogManager.getLogger(QuestionDaoCsv.class);
 
-    private String fileName;
+    private final String fileName;
 
     public QuestionDaoCsv(@Value("${fileName}")String fileName) {
         this.fileName = fileName;
