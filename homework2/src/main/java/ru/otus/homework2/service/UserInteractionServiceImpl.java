@@ -1,33 +1,29 @@
 package ru.otus.homework2.service;
 
+import org.springframework.stereotype.Service;
 import ru.otus.homework2.domain.Answer;
 import ru.otus.homework2.domain.Question;
 
-import java.io.InputStream;
-import java.io.PrintStream;
 import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
 
+@Service
 public class UserInteractionServiceImpl implements UserInteractionService {
-    private final PrintStream printStream;
-    private final Scanner inputScanner;
+    private final IOService ioService;
 
-    public UserInteractionServiceImpl(PrintStream printStream, InputStream inputStream) {
-        this.printStream = printStream;
-        this.inputScanner = new Scanner(inputStream);
+    public UserInteractionServiceImpl(IOService ioService) {
+        this.ioService = ioService;
     }
 
     @Override
     public void printMessage(String s) {
-        printStream.println(s);
+        ioService.outputString(s);
     }
 
     @Override
     public String askQuestion(String question) {
-        inputScanner.reset();
         printMessage(question);
-        return inputScanner.nextLine();
+        return ioService.readString();
     }
 
     @Override
@@ -55,9 +51,8 @@ public class UserInteractionServiceImpl implements UserInteractionService {
         int userAnswer = -1;
         boolean receivedAnswer = false;
         while (!receivedAnswer) {
-            inputScanner.reset();
             try {
-                String userInput = inputScanner.next();
+                String userInput = ioService.readString();
                 userAnswer = Integer.parseInt(userInput);
                 if (userAnswer >= 1 && userAnswer <= answers.size()) {
                     receivedAnswer = true;
