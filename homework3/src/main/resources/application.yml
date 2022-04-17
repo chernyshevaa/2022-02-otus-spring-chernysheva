@@ -1,0 +1,7 @@
+questions:
+  fileName: i18n/questions.csv
+
+testing:
+  scoreToPass: 4
+
+spring.messages.basename: i18n/messages
